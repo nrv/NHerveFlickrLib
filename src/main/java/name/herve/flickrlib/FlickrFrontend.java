@@ -47,7 +47,7 @@ import plugins.nherve.toolbox.Algorithm;
  * @author Nicolas HERVE - n.herve@laposte.net
  */
 public class FlickrFrontend {
-	private final static String API_URL = "http://api.flickr.com/services/rest/";
+	private final static String API_URL = "https://api.flickr.com/services/rest/";
 
 	private String applicationKey;
 	private boolean debug;
