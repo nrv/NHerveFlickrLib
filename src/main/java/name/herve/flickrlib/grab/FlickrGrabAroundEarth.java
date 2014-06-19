@@ -17,7 +17,7 @@
  * along with FlickrImageRetrieve. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package name.nherve.flickrlib.grab;
+package name.herve.flickrlib.grab;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
