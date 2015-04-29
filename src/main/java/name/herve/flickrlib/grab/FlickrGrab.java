@@ -147,26 +147,30 @@ public class FlickrGrab extends Algorithm implements FlickrProgressListener {
 			for (FlickrImage i : pictures) {
 				try {
 					BufferedImage img = flickr.loadImage(i, i.getClosestSize(preferedSurface), this);
-					File outputFile = new File(picdir, i.getId() + ".jpg");
+					if (img == null) {
+						errWithTime(i.getId() + " - " + i.getTitle() + " : img == null");
+					} else {
+						File outputFile = new File(picdir, i.getId() + ".jpg");
 
-					ImageIO.write(img, "jpeg", outputFile);
-					float sz = outputFile.length();
-					String strSz = " o";
-					if (sz > 1024) {
-						sz /= 1024;
-						strSz = " Ko";
+						ImageIO.write(img, "jpeg", outputFile);
+						float sz = outputFile.length();
+						String strSz = " o";
 						if (sz > 1024) {
 							sz /= 1024;
-							strSz = " Mo";
+							strSz = " Ko";
+							if (sz > 1024) {
+								sz /= 1024;
+								strSz = " Mo";
+							}
 						}
+
+						strSz = df.format(sz) + strSz;
+
+						w.write(outputFile.getName() + " | " + img.getWidth() + "x" + img.getHeight() + " | " + strSz + " | " + i.getImageWebPageURL() + " | " + i.getId() + " | " + i.getOwner() + " | " + i.getLicense().getName() + " | " + i.getTitle() + " | " + i.getTags());
+						w.newLine();
+						w.flush();
+						outWithTime(outputFile.getName() + " - " + strSz + " - " + img.getWidth() + "x" + img.getHeight() + " - " + i.getTitle() + " - " + i.getLicense().getName());
 					}
-
-					strSz = df.format(sz) + strSz;
-
-					w.write(outputFile.getName() + " | " + img.getWidth() + "x" + img.getHeight() + " | " + strSz + " | " + i.getImageWebPageURL() + " | " + i.getId() + " | " + i.getOwner() + " | " + i.getLicense().getName() + " | " + i.getTitle() + " | " + i.getTags());
-					w.newLine();
-					w.flush();
-					outWithTime(outputFile.getName() + " - " + strSz + " - " + img.getWidth() + "x" + img.getHeight() + " - " + i.getTitle() + " - " + i.getLicense().getName());
 				} catch (Exception e1) {
 					err(e1.getClass().getName() + " : " + e1.getMessage());
 				}
