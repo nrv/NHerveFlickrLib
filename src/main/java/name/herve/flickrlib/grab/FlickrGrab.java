@@ -97,12 +97,12 @@ public class FlickrGrab extends Algorithm implements FlickrProgressListener {
 
 	@Override
 	public void notifyNewProgressionStep(String step) {
-		log(step);
+		info(step);
 	}
 
 	@Override
 	public boolean notifyProgress(double position, double length) {
-		log(df.format(position / length) + " %");
+		info(df.format(position / length) + " %");
 		return true;
 	}
 
